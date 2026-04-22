@@ -21,7 +21,6 @@ export const siteConfig = {
     { name: "Live Service Library (in-house)", level: 85 },
     { name: "Spine2D / Live2D",    level: 70 },
     { name: "Godot",               level: 65 },
-    { name: "TON Blockchain",      level: 60 },
   ] as Array<{ name: string; level: number }>,
   projects: [
     {
@@ -53,7 +52,7 @@ export const siteConfig = {
         "Implemented real-time multiplayer game clients using MagicOnion and gRPC for low-latency synchronization",
         "Developed shared C# live-service libraries reused across all projects to standardize auth, IAP, and data pipelines",
         "Designed a Google Sheets–driven master data pipeline enabling designers to manage game balance without code changes",
-        "Integrated Web3/TON blockchain and Telegram Mini App SDK for a browser-based game with on-chain item ownership",
+        "Integrated Telegram Mini App SDK for a browser-based game with custom in-game economy",
         "Handled full store deployment pipeline for Google Play, App Store, and WebGL (AWS S3) including IAP via Omise payment gateway",
       ],
     },
