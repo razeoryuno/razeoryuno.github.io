@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Ittiwat Tuntithavorn",
   title: "Game Developer Programmer",
   description: "Portfolio of Ittiwat Tuntithavorn — Game Developer with 10+ years of experience in Unity and C#",
-  accentColor: "#1d4ed8",
+  accentColor: "#00D4FF",
   social: {
     email: "Ittiwat_tun@live.com",
     linkedin: "",
@@ -12,17 +12,17 @@ export const siteConfig = {
   aboutMe:
     "Senior Game Developer with 10+ years of experience shipping games across mobile, PC, WebGL, and Telegram Mini Apps. Specializing in Unity and C#, with deep expertise in game systems, real-time multiplayer, monetization, and full store deployment pipelines. Comfortable across the entire production lifecycle from architecture to store submission.",
   skills: [
-    "Unity Engine",
-    "C# / .NET",
-    "Godot",
-    "Real-time Multiplayer",
-    "MagicOnion / gRPC",
-    "PlayFab / Nakama",
-    "Spine2D / Live2D",
-    "TON Blockchain",
-    "Agile / Scrum",
-    "Git",
-  ],
+    { name: "Unity Engine",        level: 95 },
+    { name: "C# / .NET",           level: 90 },
+    { name: "Agile / Scrum",       level: 85 },
+    { name: "Git",                 level: 85 },
+    { name: "Real-time Multiplayer", level: 80 },
+    { name: "MagicOnion / gRPC",   level: 75 },
+    { name: "PlayFab / Nakama",    level: 75 },
+    { name: "Spine2D / Live2D",    level: 70 },
+    { name: "Godot",               level: 65 },
+    { name: "TON Blockchain",      level: 60 },
+  ] as Array<{ name: string; level: number }>,
   projects: [
     {
       name: "CardPotion",
@@ -30,8 +30,19 @@ export const siteConfig = {
         "A card game built with Unity. Click to play it in the browser via Unity WebGL.",
       link: "https://razeoryuno.github.io/git-hub-page-test",
       skills: ["Unity", "C#", "WebGL"],
+      role: "Gameplay Programmer",
+      engine: "Unity",
+      status: "Shipped",
     },
-  ],
+  ] as Array<{
+    name: string;
+    description: string;
+    link?: string;
+    skills: string[];
+    role?: string;
+    engine?: string;
+    status?: string;
+  }>,
   experience: [
     {
       company: "Varisoft CO., Ltd",

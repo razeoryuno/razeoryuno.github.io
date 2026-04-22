@@ -2,39 +2,47 @@
 import { siteConfig } from "../config";
 ---
 
-<section id="about" class="p-8 sm:p-12 md:p-16 lg:p-24">
-  <div>
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
-      <div class="lg:col-span-4">
-        <h2
-          class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900"
-        >
-          About Me
-        </h2>
-        <div
-          class="w-[75px] h-[5px] mt-2 rounded-full"
-          style={`background-color: ${siteConfig.accentColor}`}
-        >
+<section id="about" class="p-8 sm:p-12 md:p-16 lg:p-24" style="background: var(--bg-panel)">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+
+    <!-- Section header -->
+    <div class="lg:col-span-4">
+      <p class="mono text-xs tracking-[0.2em] text-[var(--text-muted)] uppercase mb-2">SECTION_01</p>
+      <h2 class="text-4xl sm:text-5xl xl:text-6xl font-bold text-[var(--text-primary)]">About</h2>
+      <div class="w-16 h-0.5 mt-3" style={`background: ${siteConfig.accentColor}`}></div>
+    </div>
+
+    <!-- Bio + skills -->
+    <div class="lg:col-span-8 space-y-10">
+      <p class="text-base sm:text-lg leading-relaxed text-[var(--text-secondary)]">
+        {siteConfig.aboutMe}
+      </p>
+
+      <!-- Skill modules -->
+      <div>
+        <div class="flex items-center gap-4 mb-5">
+          <span class="mono text-xs tracking-widest text-[var(--text-muted)] uppercase">// Skill Modules</span>
+          <div class="flex-1 h-px bg-[var(--border)]"></div>
         </div>
-      </div>
 
-      <div class="lg:col-span-8 space-y-8">
-        <p class="text-lg sm:text-xl md:text-2xl leading-relaxed text-gray-600">
-          {siteConfig.aboutMe}
-        </p>
-
-        <div class="pt-4">
-          <div class="flex flex-wrap gap-3">
-            {
-              siteConfig.skills.map((skill) => (
-                <span class="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 text-gray-800 rounded-full text-sm sm:text-base md:text-lg font-medium hover:bg-gray-200 transition-colors duration-200">
-                  {skill}
-                </span>
-              ))
-            }
-          </div>
+        <div class="space-y-4">
+          {siteConfig.skills.map((skill) => (
+            <div>
+              <div class="flex justify-between items-baseline mb-1.5">
+                <span class="text-sm font-medium text-[var(--text-primary)]">{skill.name}</span>
+                <span class="mono text-xs text-[var(--text-muted)]">{skill.level}%</span>
+              </div>
+              <div class="skill-track">
+                <div
+                  class="skill-fill"
+                  style={`width: ${skill.level}%; background: linear-gradient(90deg, ${siteConfig.accentColor}cc, ${siteConfig.accentColor})`}
+                ></div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
+
   </div>
 </section>
