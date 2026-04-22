@@ -7,7 +7,7 @@ export const siteConfig = {
     email: "Ittiwat_tun@live.com",
     linkedin: "",
     twitter: "",
-    github: "https://github.com/razeoryuno",
+    github: "",
   },
   aboutMe:
     "Senior Game Developer with 10+ years of experience shipping games across mobile, PC, WebGL, and Telegram Mini Apps. Specializing in Unity and C#, with deep expertise in game systems, real-time multiplayer, monetization, and full store deployment pipelines. Comfortable across the entire production lifecycle from architecture to store submission.",
@@ -29,7 +29,7 @@ export const siteConfig = {
         "A card game built with Unity. Click to play it in the browser via Unity WebGL.",
       link: "https://razeoryuno.github.io/git-hub-page-test",
       skills: ["Unity", "C#", "WebGL"],
-      role: "Gameplay Programmer",
+      role: "Solo Dev",
       engine: "Unity",
       status: "Shipped",
     },
