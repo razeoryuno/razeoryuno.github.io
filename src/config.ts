@@ -10,20 +10,20 @@ export const siteConfig = {
     github: "https://github.com/razeoryuno",
   },
   aboutMe:
-    "Game Developer with over 10 years of professional experience shipping games across mobile, PC, and web platforms. Specializing in Unity and .NET C#, with deep expertise in game mechanics, monetization (IAP, Ads, analytics), live-service backends (PlayFab, Nakama), and full store deployment pipelines (Google Play, App Store, Steam).",
+    "Senior Game Developer with 10+ years of experience shipping games across mobile, PC, WebGL, and Telegram Mini Apps. Specializing in Unity (C#) with full-stack capability — building game clients, Go backend APIs, real-time multiplayer servers, and deployment pipelines. Comfortable across the entire production lifecycle from architecture to store submission.",
   skills: [
     "Unity Engine",
     "C# / .NET",
-    "Godot",
-    "NodeJS",
-    "SQL",
-    "Agile / Scrum",
-    "Git",
-    "Spine2D",
-    "Live2D",
-    "Steamworks",
-    "PlayFab",
-    "Nakama",
+    "Go (Golang)",
+    "MagicOnion / gRPC",
+    "Real-time Multiplayer",
+    "PostgreSQL",
+    "Redis",
+    "Docker / Kubernetes",
+    "Google Sheets API",
+    "TON Blockchain",
+    "PlayFab / Nakama",
+    "Spine2D / Live2D",
   ],
   projects: [
     {
@@ -40,8 +40,13 @@ export const siteConfig = {
       title: "Game Developer Programmer",
       dateRange: "2019 - Present",
       bullets: [
-        "Developed and maintained game features using Unity and C#",
-        "Implemented game systems including progression, monetization, and live-service integrations",
+        "Shipped 14+ games and apps across iOS, Android, WebGL, and Telegram Mini Apps",
+        "Built full-stack architecture with Unity/C# clients and Go backend APIs connected via gRPC and MagicOnion for real-time multiplayer",
+        "Developed shared live-service libraries (C# and Go) reused across all projects to standardize auth, IAP, and data pipelines",
+        "Designed a Google Sheets–driven master data pipeline enabling designers to manage game balance without code changes",
+        "Integrated Web3/TON blockchain and Telegram Mini App SDK for Catbomb, a browser-based game with on-chain item ownership",
+        "Set up PostgreSQL + ClickHouse + Redis backends with Docker/Kubernetes deployment and CI/CD via GitHub Actions",
+        "Handled full store deployment pipeline for Google Play, App Store, and WebGL (AWS S3) including IAP via Omise payment gateway",
       ],
     },
     {
@@ -49,7 +54,7 @@ export const siteConfig = {
       title: "Game Developer Programmer",
       dateRange: "2017 - 2019",
       bullets: [
-        "Built gameplay systems and tooling for multiple game projects",
+        "Developed gameplay systems and UI for multiple Unity game projects",
         "Contributed to Agile development workflows using Git and Scrum",
       ],
     },
@@ -58,8 +63,8 @@ export const siteConfig = {
       title: "Game Developer Programmer",
       dateRange: "2015 - 2017",
       bullets: [
-        "Developed game mechanics and UI systems in Unity",
-        "Worked on mobile game optimization and store deployment",
+        "Built game mechanics, UI systems, and mobile optimization in Unity",
+        "Handled Google Play and App Store deployment and monetization integration",
       ],
     },
     {
@@ -67,8 +72,8 @@ export const siteConfig = {
       title: "Game Developer Programmer",
       dateRange: "2013 - 2015",
       bullets: [
-        "Contributed to game development projects as a junior programmer",
-        "Gained foundational experience in Unity, C#, and game production pipelines",
+        "Built game features and tooling in Unity as part of a small development team",
+        "Gained foundational experience in C#, game production pipelines, and Agile workflows",
       ],
     },
     {
@@ -76,7 +81,7 @@ export const siteConfig = {
       title: "SAP Consultant Trainee",
       dateRange: "2013",
       bullets: [
-        "Trained in SAP enterprise consulting before transitioning to game development",
+        "Trained in SAP enterprise consulting before transitioning fully into game development",
       ],
     },
   ],
