@@ -18,6 +18,7 @@ export const siteConfig = {
     { name: "Git",                 level: 85 },
     { name: "Real-time Multiplayer (MagicOnion / gRPC)", level: 80 },
     { name: "PlayFab",             level: 75 },
+    { name: "Live Service Library (in-house)", level: 85 },
     { name: "Spine2D / Live2D",    level: 70 },
     { name: "Godot",               level: 65 },
     { name: "TON Blockchain",      level: 60 },
