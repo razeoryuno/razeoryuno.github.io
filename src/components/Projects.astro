@@ -1,6 +1,11 @@
 ---
 import { siteConfig } from "../config";
 const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
+
+function toEmbedUrl(watchUrl: string) {
+  const id = new URL(watchUrl).searchParams.get('v');
+  return `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1`;
+}
 ---
 
 {hasProjects && (
@@ -18,6 +23,34 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
       <div class="lg:col-span-8 space-y-4">
         {siteConfig.projects.map((project, index) => (
           <div class="asset-card card-panel group">
+
+            <!-- Screenshot / video gallery -->
+            {(project.images?.length || project.videos?.length) && (
+              <div class="asset-gallery" style="border-bottom: 1px solid var(--border)">
+                {project.images?.map((src, i) => (
+                  <div class={`gallery-slot gallery-slot--${project.imageLayout ?? "landscape"}`}>
+                    <img
+                      src={src}
+                      alt={`${project.name} screenshot ${i + 1}`}
+                      class="gallery-img"
+                      loading="lazy"
+                      data-lightbox
+                    />
+                  </div>
+                ))}
+                {project.videos?.map((url) => (
+                  <div class={`gallery-slot gallery-slot--${project.imageLayout ?? "landscape"}`}>
+                    <iframe
+                      src={toEmbedUrl(url)}
+                      class="gallery-video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
 
             <!-- Card header bar -->
             <div class="asset-header flex items-center justify-between px-4 py-2.5"
@@ -50,7 +83,7 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
             </div>
 
             <!-- Metadata bar -->
-            {(project.role || project.engine || project.status) && (
+            {(project.role || project.engine || project.genre || project.devTime || project.status) && (
               <div class="px-4 py-3 flex flex-wrap gap-x-6 gap-y-1"
                 style="border-top: 1px solid var(--border); background: rgba(255,255,255,0.02)">
                 {project.role && (
@@ -63,9 +96,26 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
                     ENGINE: <span class="text-[var(--text-secondary)]">{project.engine}</span>
                   </span>
                 )}
+                {project.genre && (
+                  <span class="mono text-xs text-[var(--text-muted)]">
+                    GENRE: <span class="text-[var(--text-secondary)]">{project.genre}</span>
+                  </span>
+                )}
+                {project.devTime && (
+                  <span class="mono text-xs text-[var(--text-muted)]">
+                    DEV TIME: <span class="text-[var(--text-secondary)]">{project.devTime}</span>
+                  </span>
+                )}
                 {project.status && (
                   <span class="mono text-xs text-[var(--text-muted)]">
-                    STATUS: <span style={`color: ${siteConfig.accentColor}`}>✓ {project.status.toUpperCase()}</span>
+                    STATUS: {project.status === "Out of Service"
+                      ? <span style="color: #666">✕ OUT OF SERVICE</span>
+                      : project.status === "Unreleased"
+                      ? <span style="color: #888">◌ UNRELEASED</span>
+                      : project.status === "Thesis"
+                      ? <span style="color: #888">◈ THESIS</span>
+                      : <span style={`color: ${siteConfig.accentColor}`}>✓ {project.status.toUpperCase()}</span>
+                    }
                   </span>
                 )}
               </div>
@@ -87,6 +137,12 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
 
     </div>
   </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+    <button id="lightbox-close" aria-label="Close">ESC ✕</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
 )}
 
 <style>
@@ -97,4 +153,151 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
   .asset-card:hover {
     box-shadow: 0 0 0 1px var(--border-bright), 0 8px 32px rgba(0, 0, 0, 0.4);
   }
+
+  .asset-gallery {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    background: #0a0a0a;
+  }
+
+  .asset-gallery::-webkit-scrollbar {
+    height: 3px;
+  }
+  .asset-gallery::-webkit-scrollbar-track {
+    background: var(--border);
+  }
+  .asset-gallery::-webkit-scrollbar-thumb {
+    background: var(--border-bright);
+    border-radius: 2px;
+  }
+
+  .gallery-slot {
+    flex-shrink: 0;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+
+  /* Portrait — mobile game screenshots (9:16) */
+  .gallery-slot--portrait {
+    width: 180px;
+    height: 320px;
+  }
+
+  /* Landscape — banner / wide gameplay screenshots (16:9) */
+  .gallery-slot--landscape {
+    width: 427px;
+    height: 240px;
+  }
+
+  .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: brightness(0.9);
+    transition: filter 0.2s;
+  }
+
+  .gallery-slot:hover .gallery-img {
+    filter: brightness(1);
+  }
+
+  .gallery-video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .gallery-img[data-lightbox] {
+    cursor: zoom-in;
+  }
+
+  /* Lightbox */
+  #lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.88);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+  }
+
+  #lightbox.open {
+    display: flex;
+    animation: lb-in 0.18s ease-out;
+  }
+
+  @keyframes lb-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  #lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+    animation: lb-scale 0.18s ease-out;
+    cursor: zoom-out;
+  }
+
+  @keyframes lb-scale {
+    from { transform: scale(0.93); }
+    to   { transform: scale(1); }
+  }
+
+  #lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: #888;
+    background: none;
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  #lightbox-close:hover {
+    color: #e2e2e2;
+    border-color: #555;
+  }
 </style>
+
+<script>
+  const lb      = document.getElementById('lightbox')!;
+  const lbImg   = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lbClose = document.getElementById('lightbox-close')!;
+
+  function open(src: string, alt: string) {
+    lbImg.src = src;
+    lbImg.alt = alt;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLImageElement>('img[data-lightbox]').forEach(img => {
+    img.addEventListener('click', () => open(img.src, img.alt));
+  });
+
+  lbClose.addEventListener('click', close);
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+</script>
