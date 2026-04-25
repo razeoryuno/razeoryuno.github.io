@@ -40,10 +40,11 @@ export const siteConfig = {
     {
       name: "Pakapow M",
       description: "Online board RPG inspired by Dokapon. Navigate a tile-based map with turn-based combat, monster encounters, treasure events.",
+      icon: "/images/projects/icon/pakapow_m_icon.jpg",
       images: ["/images/projects/pakapow-m.png"],
       imageLayout: "landscape",
-      skills: ["Unity", "C#"],
-      backendSkills: ["MagicOnion", "Live Service"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
+      backendStack: [{ engine: "MagicOnion", lang: "C#" }, { engine: "Live Service", lang: "Go" }],
       role: "Lead Developer",
       engine: "Unity",
       genre: "Board RPG",
@@ -70,9 +71,10 @@ export const siteConfig = {
     {
       name: "World of Runner",
       description: "Mobile fantasy racing game where players guide customizable runners through obstacle-filled courses, competing against others in real-time across fantasy-themed stages.",
+      icon: "/images/projects/icon/world_of_runner_icon.png",
       images: ["/images/projects/world-of-runner.jpg"],
       imageLayout: "landscape",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Developer",
       engine: "Unity",
       genre: "Racing",
@@ -82,10 +84,11 @@ export const siteConfig = {
     {
       name: "Neokami God Challenger",
       description: "Action RPG with isometric world exploration, real-time combat, and character progression.",
+      icon: "/images/projects/icon/neokami_icon.png",
       images: ["/images/projects/neokami.jpg"],
       videos: ["https://www.youtube.com/watch?v=OkD7sQVFtrk"],
       imageLayout: "landscape",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Lead Developer",
       engine: "Unity",
       genre: "Action RPG",
@@ -95,6 +98,7 @@ export const siteConfig = {
     {
       name: "Zabb World Secret Stories",
       description: "Community-driven social game featuring isometric town exploration, avatar customization, and interactive NPC-driven storylines.",
+      icon: "/images/projects/icon/zabb_world_icon.jpg",
       images: [
         "/images/projects/zabb-world.jpg",
         "/images/projects/zabb_1.png",
@@ -102,7 +106,7 @@ export const siteConfig = {
         "/images/projects/zabb_3.png",
       ],
       imageLayout: "landscape",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Front-end Developer",
       engine: "Unity",
       genre: "Community / Social",
@@ -112,13 +116,14 @@ export const siteConfig = {
     {
       name: "Commandeer Armament",
       description: "Tactical Collectible Card Game where units occupy board positions and attack in directional patterns.",
+      icon: "/images/projects/icon/commandeer_armament_icon.jpg",
       images: [
         "/images/projects/commandeer_0.jpg",
         "/images/projects/commandeer_2.jpg",
       ],
       videos: ["https://www.youtube.com/watch?v=Hof6qAx2U98"],
       imageLayout: "landscape",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Full Stack Developer",
       engine: "Unity",
       genre: "Collectible Card Game",
@@ -133,7 +138,7 @@ export const siteConfig = {
         "/images/projects/everafter_2.png",
       ],
       imageLayout: "landscape",
-      skills: ["Unity", "C#", "Live2D"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }, { engine: "Live2D", lang: "" }],
       role: "Solo Developer",
       engine: "Unity / Live2D",
       genre: "Visual Novel",
@@ -143,13 +148,14 @@ export const siteConfig = {
     {
       name: "Puzzle Guardian",
       description: "Mobile puzzle RPG with match-3 combat, collectible characters, and wave-based boss encounters.",
+      icon: "/images/projects/icon/puzzle_guardian_icon.png",
       images: [
         "/images/projects/puzzle_guardian_1.jpg",
         "/images/projects/puzzle_guardian_2.jpg",
       ],
       videos: ["https://www.youtube.com/watch?v=mD0TRdb4AM0"],
       imageLayout: "portrait",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Back-end Developer",
       engine: "Unity",
       genre: "Puzzle RPG",
@@ -159,13 +165,14 @@ export const siteConfig = {
     {
       name: "Godji Runner",
       description: "3D mobile endless runner based on the Godji IP.",
+      icon: "/images/projects/icon/godji_runner_icon.png",
       images: [
         "/images/projects/godji_1.jpg",
         "/images/projects/godji_2.jpg",
       ],
       videos: ["https://www.youtube.com/watch?v=Oo5oDDVpF10"],
       imageLayout: "portrait",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Front-end Developer",
       engine: "Unity",
       genre: "Endless Runner",
@@ -181,7 +188,7 @@ export const siteConfig = {
         "/images/projects/mad_mission_3.jpg",
       ],
       imageLayout: "landscape",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Front-end Developer",
       engine: "Unity",
       genre: "Strategy",
@@ -191,13 +198,14 @@ export const siteConfig = {
     {
       name: "Blackjack Dash",
       description: "Mobile card game fusing Blackjack hand-scoring with time-attack Solitaire mechanics.",
+      icon: "/images/projects/icon/blackjack_dash_icon.png",
       images: [
         "/images/projects/blackjack_dash_1.jpg",
         "/images/projects/blackjack_dash_2.jpg",
         "/images/projects/blackjack_dash_3.jpg",
       ],
       imageLayout: "portrait",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Solo Developer",
       engine: "Unity",
       genre: "Card Game",
@@ -207,12 +215,13 @@ export const siteConfig = {
     {
       name: "OMG REINDEER OMG",
       description: "Mobile casual idle-evolution game. Tap to evolve reindeer through multiple upgrade tiers with unlockable story chapters.",
+      icon: "/images/projects/icon/omg_reindeer_icon.png",
       images: [
         "/images/projects/omg_reindeer_1.jpg",
         "/images/projects/omg_reindeer_2.jpg",
       ],
       imageLayout: "portrait",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Solo Developer",
       engine: "Unity",
       genre: "Casual / Idle",
@@ -222,12 +231,13 @@ export const siteConfig = {
     {
       name: "Cripple Bat",
       description: "Mobile endless flap-style platformer where players guide a bat through procedurally placed obstacle columns.",
+      icon: "/images/projects/icon/crippled_bat_icon.png",
       images: [
         "/images/projects/crippled_bat_1.jpg",
         "/images/projects/crippled_bat_2.jpg",
       ],
       imageLayout: "portrait",
-      skills: ["Unity", "C#"],
+      frontendStack: [{ engine: "Unity", lang: "C#" }],
       role: "Solo Developer",
       engine: "Unity",
       genre: "Endless Runner",
@@ -238,7 +248,7 @@ export const siteConfig = {
       name: "Bullet Blossom",
       description: "Thesis project — side-scrolling bullet hell built with XNA. Features a weapon-wheel system with multiple elemental projectile sets across multiple stages.",
       imageLayout: "landscape",
-      skills: ["XNA", "C#"],
+      frontendStack: [{ engine: "XNA", lang: "C#" }],
       role: "Solo Programmer",
       engine: "XNA",
       genre: "Bullet Hell",
@@ -248,12 +258,13 @@ export const siteConfig = {
   ] as Array<{
     name: string;
     description: string;
+    icon?: string;
     link?: string;
     images?: string[];
     videos?: string[];
     imageLayout?: "portrait" | "landscape";
-    skills: string[];
-    backendSkills?: string[];
+    frontendStack: Array<{ engine: string; lang?: string }>;
+    backendStack?: Array<{ engine: string; lang?: string }>;
     role?: string;
     engine?: string;
     genre?: string;

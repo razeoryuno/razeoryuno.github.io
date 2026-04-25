@@ -7,6 +7,7 @@ Portfolio site for Ittiwat Tuntithavorn. Single-page CV / résumé deployed to G
 - **Always update this CLAUDE.md** when structure, stack, content shape, or conventions change — keep it current with the codebase.
 - **Memory is local to this repo.** Save all persistent memories to `.claude/memory/` inside this repo, not to the global user memory path.
 - **Never output existing code.** Only show what changed — diffs, new snippets, or a one-line summary. Do not repeat unchanged code back to the user.
+- **All content is in `src/config.ts` — never hardcode text in `.astro` files.**
 
 ## Stack
 
@@ -18,131 +19,94 @@ Portfolio site for Ittiwat Tuntithavorn. Single-page CV / résumé deployed to G
 | Fonts | Inter (body), JetBrains Mono (`.mono` / `.tag` / code labels) — loaded from Google Fonts |
 | Deployment | GitHub Pages via GitHub Actions (push to `main` triggers build) |
 
-## Local dev
-
-```bash
-# from razeoryuno.github.io/
-npm install          # first-time setup
-npm run dev          # dev server at http://localhost:4000 (or next free port)
-npm run build        # production build into dist/
-npm run preview      # serve dist/ locally
-```
-
-> The Windows libuv assertion on process exit after `npm run build` is a known harmless quirk — the build succeeds regardless.
-
 ## Project structure
 
 ```
 src/
-  config.ts           ← ALL site content lives here (single source of truth)
+  config.ts              ← ALL site content (single source of truth)
   pages/
-    index.astro       ← HTML shell, imports all section components
+    index.astro          ← HTML shell, imports all section components
   components/
-    Header.astro
-    Hero.astro
-    About.astro
-    Projects.astro
-    Experience.astro
-    Education.astro
-    Footer.astro
+    Header.astro         ← sticky nav bar
+    Hero.astro           ← name, title, social links
+    About.astro          ← bio paragraph + expertise skill tags
+    Projects.astro       ← project cards (largest component)
+    Experience.astro     ← work history
+    Education.astro      ← education entries
+    Footer.astro         ← footer
   styles/
-    global.css        ← CSS custom properties (design tokens), utility classes
+    global.css           ← CSS custom properties (design tokens), utility classes
 public/
-  images/projects/    ← Project banner images (served as-is, no processing)
+  images/projects/       ← project banner images (served as-is)
   favicon.svg
-astro.config.mjs      ← sets site URL, registers Tailwind Vite plugin
+astro.config.mjs         ← site URL, Tailwind Vite plugin
 ```
-
-## Content editing
-
-**All content is in `src/config.ts` — never hardcode text in `.astro` files.**
-
-The exported `siteConfig` object contains:
-
-| Key | Type | Purpose |
-|---|---|---|
-| `name` | string | Site author name |
-| `title` | string | Tagline / job title shown in Hero |
-| `description` | string | Meta description |
-| `accentColor` | string | Hex accent color (injected inline, not a CSS var) |
-| `social` | `{email, linkedin, twitter, github}` | Social links (all strings) |
-| `aboutMe` | string | Paragraph shown in About section |
-| `expertise` | `{technical: string[], domain: string[]}` | Two skill-tag groups |
-| `projects` | see below | Project cards |
-| `experience` | `{company, title, dateRange, bullets}[]` | Work history |
-| `education` | `{school, degree, dateRange}[]` | Education |
-
-### Projects array shape
-
-```typescript
-{
-  name: string;
-  description: string;
-  images?: string[];             // paths relative to public/
-  videos?: string[];             // YouTube embed URLs
-  imageLayout?: string;          // "landscape" | "portrait";
-  skills?: string[];             // frontend tag badges
-  backendSkills?: string[];      // backend tag badges
-  role?: string;
-  engine?: string;
-  genre?: string;
-  devTime?: string;
-  status?: string;               // "Live" | "Out of Service" | "Unreleased" | "Thesis"
-  responsibilities?: string;
-  coreSystems?: string[];
-  devLog?: { title?: string; challenge: string; solution: string };
-  videoDemo?: string;
-  sourceCode?: string;
-  link?: string;                 // legacy fallback CTA
-  distribution?: {
-    webgl?: string;
-    googlePlay?: string;
-    appStore?: string;
-    steam?: string;
-    itchio?: string;
-    epic?: string;
-  };
-}
-```
-
-Status values render with distinct symbols in the metadata bar:
-- `"Live"` → `✓ LIVE` in accent color
-- `"Out of Service"` → `✕ OUT OF SERVICE` in `#666`
-- `"Unreleased"` → `◌ UNRELEASED` in `#888`
-- `"Thesis"` → `◈ THESIS` in `#888`
 
 ## Design system
 
 Custom properties defined in `src/styles/global.css`:
 
 ```css
---bg-base:        #121212   /* page background */
+/* backgrounds */
+--bg-base:        #121212
 --bg-panel:       #181818
---bg-card:        #1e1e1e   /* project / skill cards */
+--bg-card:        #1e1e1e
 --bg-card-hover:  #242424
+/* borders */
 --border:         #2d2d2d
 --border-bright:  #3a3a3a
+
+/* text */
 --text-primary:   #e2e2e2
 --text-secondary: #888888
 --text-muted:     #484848
+
+/* accent */
+--accent:         #00D4FF
+--focus-ring:     2px solid var(--accent)
+--accent-warning: #FF9500
+--accent-locked:  #666
+
+/* store badges */
+--store-google:   #01875F
+--store-apple:    #0A84FF
+--store-steam:    #66C0F4
+--store-itchio:   #FA5C5C
+--store-epic:     #ffffff
 ```
 
-`accentColor` in `config.ts` (default `#00D4FF`) is injected inline via Astro template expressions — it is not a CSS variable.
+`accentColor` in `config.ts` is injected inline via Astro template expressions for dynamic use; `--accent` in `global.css` is the static CSS variable counterpart.
 
-Shared CSS classes: `.mono`, `.tag`, `.card-panel`, `.skill-track`, `.skill-fill`, `.animate-fade-in`.
+Shared CSS classes: `.mono`, `.tag`, `.card-panel`, `.skill-fill`, `.animate-fade-in`.
+
+Tag variants (in `Projects.astro`): `.tag--frontend` (amber) for `frontendStack[]`, `.tag--backend` (purple) for `backendStack[]`. Both arrays use `{ engine: string; lang?: string }` objects — rendered as `Engine-Lang` (lang omitted if empty).
+
+## Project card layout (`Projects.astro`)
+
+Each `.asset-card` renders in this order — always visible unless noted:
+
+| Slot | Always visible | Notes |
+|---|---|---|
+| Gallery | ✓ | `images[]` + `videos[]`; scroll-snap strip |
+| Icon + Name + Description | ✓ | Icon 48×48 rounded-square left of name/desc; header CTA shown only when no `distribution` |
+| Distribution buttons | ✓ | Primary CTA style (accent fill); `store-btn--locked` for proprietary |
+| READ MORE toggle | ✓ (collapsed) | Hidden once expanded (`expand-toggle--more`) |
+| **— expandable —** | fold | Hidden until expanded |
+| → Responsibilities | fold | `responsibilities` field |
+| → Core Systems | fold | `coreSystems[]` field |
+| → Dev Log | fold | `devLog.{challenge,solution}` |
+| → Metadata bar | fold | role / genre / devTime / status |
+| → Tech stack tags | fold | `frontendStack[]` + `backendStack[]` |
+| SHOW LESS toggle | fold | Bottom of expandable (`expand-toggle--less`) |
+
+`hasExpandable` is true when any fold content is present (always true in practice since every project has `skills`).
 
 ## Static assets
 
-Banner images live in `public/images/projects/`. File names must match entries in the `images` array in `config.ts`. Astro serves `public/` as-is — no import or processing needed.
+All images are served from `public/` as-is (no processing).
 
-## Deployment
+| Path | Field in `config.ts` | Notes |
+|---|---|---|
+| `public/images/projects/` | `images[]` | Banner/screenshot gallery |
+| `public/images/projects/icon/` | `icon` | 48×48 card icon — optional |
 
-The site deploys from the `main` branch. Development work is on the `devportfolio` branch.
-
-To publish: merge `devportfolio` → `main`, then push. GitHub Actions builds Astro and pushes to the `gh-pages` branch automatically (or GitHub Pages can be set to build from `main` directly — verify in repo Settings → Pages).
-
-```bash
-# from razeoryuno.github.io/
-git push origin devportfolio   # push feature branch
-# then open a PR or merge to main on GitHub
-```

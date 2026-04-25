@@ -52,7 +52,9 @@ function hasAnyDistribution(p: Project) {
           const hasExpandable = !!(
             project.responsibilities ||
             (project.coreSystems && project.coreSystems.length > 0) ||
-            project.devLog
+            project.devLog ||
+            (project.frontendStack && project.frontendStack.length > 0) ||
+            (project.backendStack && project.backendStack.length > 0)
           );
           return (
           <div class="asset-card card-panel group" data-expanded="false">
@@ -94,51 +96,112 @@ function hasAnyDistribution(p: Project) {
             {(() => {
               const cta = !hasAnyDistribution(project) ? pickPrimaryCta(project) : null;
               return (
-                <>
-                  <!-- Card header bar -->
-                  <div class="asset-header flex items-center justify-between px-4 py-2.5"
-                    style="border-bottom: 1px solid var(--border)">
-                    <span class="text-sm font-semibold text-[var(--text-primary)] truncate">{project.name}</span>
-                    {cta && (
-                      <a
-                        href={cta.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class={`cta-btn cta-btn--${cta.kind} mono`}
-                        style={cta.kind === "primary" ? `--cta: ${siteConfig.accentColor}` : undefined}
-                        aria-label={`${cta.label} — ${project.name}`}
-                      >
-                        {cta.label}
-                      </a>
+                <div class="px-4 py-3" style="border-bottom: 1px solid var(--border)">
+                  <div class="flex items-start gap-3">
+                    {project.icon && (
+                      <img
+                        src={project.icon}
+                        alt=""
+                        aria-hidden="true"
+                        width="48"
+                        height="48"
+                        class="project-icon"
+                        loading="lazy"
+                      />
                     )}
+                    <div class="flex-1 min-w-0">
+                      <div class={`flex items-center gap-3 mb-2 ${cta ? 'justify-between' : ''}`}>
+                        <span class="text-sm font-semibold text-[var(--text-primary)] truncate">{project.name}</span>
+                        {cta && (
+                          <a
+                            href={cta.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class={`cta-btn cta-btn--${cta.kind} mono`}
+                            style={cta.kind === "primary" ? `--cta: ${siteConfig.accentColor}` : undefined}
+                            aria-label={`${cta.label} — ${project.name}`}
+                          >
+                            {cta.label}
+                          </a>
+                        )}
+                      </div>
+                      <p class="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+                        {project.description}
+                      </p>
+                    </div>
                   </div>
-                </>
+                </div>
               );
             })()}
 
-            <!-- Description -->
-            <div class="px-4 py-4">
-              <p class="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
-                {project.description}
-              </p>
-            </div>
+            <!-- Distribution (always visible) -->
+            {(hasAnyDistribution(project) || project.sourceCode) && (
+              <div class="distribution" style="border-top: 1px solid var(--border)">
+                <div class="distribution-buttons">
+                  {project.distribution?.webgl && (
+                    <a href={project.distribution.webgl} target="_blank" rel="noopener noreferrer"
+                      class="store-btn mono" aria-label={`Play ${project.name} in browser`}>
+                      <span class="store-icon">▶</span> Play in Browser
+                    </a>
+                  )}
+                  {project.distribution?.googlePlay && (
+                    <a href={project.distribution.googlePlay} target="_blank" rel="noopener noreferrer"
+                      class="store-btn mono" aria-label={`${project.name} on Google Play`}>
+                      <span class="store-icon">▶</span> Google Play
+                    </a>
+                  )}
+                  {project.distribution?.appStore && (
+                    <a href={project.distribution.appStore} target="_blank" rel="noopener noreferrer"
+                      class="store-btn mono" aria-label={`${project.name} on App Store`}>
+                      <span class="store-icon"></span> App Store
+                    </a>
+                  )}
+                  {project.distribution?.steam && (
+                    <a href={project.distribution.steam} target="_blank" rel="noopener noreferrer"
+                      class="store-btn mono" aria-label={`${project.name} on Steam`}>
+                      <span class="store-icon">⚙</span> Steam
+                    </a>
+                  )}
+                  {project.distribution?.itchio && (
+                    <a href={project.distribution.itchio} target="_blank" rel="noopener noreferrer"
+                      class="store-btn mono" aria-label={`${project.name} on itch.io`}>
+                      <span class="store-icon">◆</span> itch.io
+                    </a>
+                  )}
+                  {project.distribution?.epic && (
+                    <a href={project.distribution.epic} target="_blank" rel="noopener noreferrer"
+                      class="store-btn mono" aria-label={`${project.name} on Epic Games`}>
+                      <span class="store-icon">◈</span> Epic Games
+                    </a>
+                  )}
+                  {project.sourceCode === "proprietary" ? (
+                    <span class="store-btn store-btn--locked mono" title="Source code withheld under NDA / PDPA">
+                      <span class="store-icon">🔒</span> Proprietary Code
+                    </span>
+                  ) : project.sourceCode ? (
+                    <a href={project.sourceCode} target="_blank" rel="noopener noreferrer"
+                      class="store-btn mono">
+                      <span class="store-icon">&#60;/&#62;</span> Source Code
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            )}
 
-            <!-- Read more / Show less toggle -->
+            <!-- READ MORE toggle (hidden when expanded) -->
             {hasExpandable && (
               <button
-                class="expand-toggle mono"
+                class="expand-toggle expand-toggle--more mono"
                 type="button"
                 data-expand-toggle
                 aria-expanded="false"
                 aria-label={`Expand details for ${project.name}`}
               >
-                <span class="expand-label-more">READ MORE</span>
-                <span class="expand-label-less">SHOW LESS</span>
-                <span class="expand-chevron">▾</span>
+                READ MORE <span class="expand-chevron">▾</span>
               </button>
             )}
 
-            <!-- Expandable block: responsibilities, systems, devlog, distribution -->
+            <!-- Expandable block -->
             <div class="expandable">
               <!-- Role & Responsibility -->
               {project.responsibilities && (
@@ -163,143 +226,103 @@ function hasAnyDistribution(p: Project) {
                 </div>
               )}
 
-              <!-- Dev Log (Technical Challenge & Solution) -->
+              <!-- Dev Log -->
               {project.devLog && (
-                <div class="devlog" style="border-top: 1px solid var(--border)">
-                  <div class="devlog-header">
-                    <span class="mono devlog-tag">DEV_LOG</span>
-                    {project.devLog.title && (
-                      <span class="devlog-title">{project.devLog.title}</span>
-                    )}
-                  </div>
-                  <div class="devlog-row">
-                    <span class="mono devlog-label" style="color: var(--accent-warning)">CHALLENGE</span>
-                    <p>{project.devLog.challenge}</p>
-                  </div>
-                  <div class="devlog-row">
-                    <span class="mono devlog-label" style={`color: ${siteConfig.accentColor}`}>SOLUTION</span>
-                    <p>{project.devLog.solution}</p>
-                  </div>
-                </div>
-              )}
-
-            <!-- Metadata bar -->
-            {(project.role || project.genre || project.devTime || project.status) && (
-              <div class="px-4 py-3 flex flex-wrap gap-x-6 gap-y-1"
-                style="border-top: 1px solid var(--border); background: rgba(255,255,255,0.02)">
-                {project.role && (
-                  <span class="mono text-xs text-[var(--text-secondary)]">
-                    ROLE: <span class="text-[var(--text-secondary)]">{project.role}</span>
-                  </span>
-                )}
-                {project.genre && (
-                  <span class="mono text-xs text-[var(--text-secondary)]">
-                    GENRE: <span class="text-[var(--text-secondary)]">{project.genre}</span>
-                  </span>
-                )}
-                {project.devTime && (
-                  <span class="mono text-xs text-[var(--text-secondary)]">
-                    DEV TIME: <span class="text-[var(--text-secondary)]">{project.devTime}</span>
-                  </span>
-                )}
-                {project.status && (
-                  <span class="mono text-xs text-[var(--text-secondary)]">
-                    STATUS: {project.status === "Out of Service"
-                      ? <span style="color: #666">✕ OUT OF SERVICE</span>
-                      : project.status === "Unreleased"
-                      ? <span style="color: #888">◌ UNRELEASED</span>
-                      : project.status === "Thesis"
-                      ? <span style="color: #888">◈ THESIS</span>
-                      : <span style={`color: ${siteConfig.accentColor}`}>✓ {project.status.toUpperCase()}</span>
-                    }
-                  </span>
-                )}
-              </div>
-            )}
-
-              <!-- Distribution row -->
-              {(hasAnyDistribution(project) || project.sourceCode) && (
-                <div class="distribution" style="border-top: 1px solid var(--border)">
-                  <span class="mono section-label">// Distribution</span>
-                  <div class="distribution-buttons">
-                    {project.distribution?.webgl && (
-                      <a href={project.distribution.webgl} target="_blank" rel="noopener noreferrer"
-                        class="store-btn store-btn--webgl mono"
-                        style={`--brand: ${siteConfig.accentColor}`}>
-                        <span class="store-icon">▶</span> Play in Browser
-                      </a>
-                    )}
-                    {project.distribution?.googlePlay && (
-                      <a href={project.distribution.googlePlay} target="_blank" rel="noopener noreferrer"
-                        class="store-btn mono" style="--brand: var(--store-google)">
-                        <span class="store-icon">▶</span> Google Play
-                      </a>
-                    )}
-                    {project.distribution?.appStore && (
-                      <a href={project.distribution.appStore} target="_blank" rel="noopener noreferrer"
-                        class="store-btn mono" style="--brand: var(--store-apple)">
-                        <span class="store-icon"></span> App Store
-                      </a>
-                    )}
-                    {project.distribution?.steam && (
-                      <a href={project.distribution.steam} target="_blank" rel="noopener noreferrer"
-                        class="store-btn mono" style="--brand: var(--store-steam)">
-                        <span class="store-icon">⚙</span> Steam
-                      </a>
-                    )}
-                    {project.distribution?.itchio && (
-                      <a href={project.distribution.itchio} target="_blank" rel="noopener noreferrer"
-                        class="store-btn mono" style="--brand: var(--store-itchio)">
-                        <span class="store-icon">◆</span> itch.io
-                      </a>
-                    )}
-                    {project.distribution?.epic && (
-                      <a href={project.distribution.epic} target="_blank" rel="noopener noreferrer"
-                        class="store-btn mono" style="--brand: var(--store-epic)">
-                        <span class="store-icon">◈</span> Epic Games
-                      </a>
-                    )}
-
-                    {project.sourceCode === "proprietary" ? (
-                      <span class="store-btn store-btn--locked mono" title="Source code withheld under NDA / PDPA">
-                        <span class="store-icon">🔒</span> Proprietary Code
-                      </span>
-                    ) : project.sourceCode ? (
-                      <a href={project.sourceCode} target="_blank" rel="noopener noreferrer"
-                        class="store-btn mono" style="--brand: var(--text-primary)">
-                        <span class="store-icon">&#60;/&#62;</span> Source Code
-                      </a>
-                    ) : null}
-                  </div>
-                </div>
-              )}
-            </div>
-            <!-- /expandable -->
-
-            <!-- Skill tags -->
-            {((project.skills && project.skills.length > 0) ||
-              (project.backendSkills && project.backendSkills.length > 0)) && (
-              <div class="px-4 py-3 space-y-3"
-                style="border-top: 1px solid var(--border)">
-                {project.skills && project.skills.length > 0 && (
-                  <div class="flex flex-wrap gap-2">
-                    {project.skills.map((skill) => (
-                      <span class="tag">{skill}</span>
-                    ))}
-                  </div>
-                )}
-                {project.backendSkills && project.backendSkills.length > 0 && (
-                  <div>
-                    <h4 class="mono section-label">// Backend Stack</h4>
-                    <div class="flex flex-wrap gap-2">
-                      {project.backendSkills.map((skill) => (
-                        <span class="tag tag--backend">{skill}</span>
-                      ))}
+                <div class="px-4 py-4" style="border-top: 1px solid var(--border)">
+                  <h4 class="mono section-label">
+                    {project.devLog.title ? `// Dev Log — ${project.devLog.title}` : '// Dev Log'}
+                  </h4>
+                  <div class="space-y-4">
+                    <div>
+                      <span class="mono devlog-label" style="color: var(--accent-warning)">CHALLENGE</span>
+                      <p class="tech-body mt-1">{project.devLog.challenge}</p>
+                    </div>
+                    <div>
+                      <span class="mono devlog-label" style={`color: ${siteConfig.accentColor}`}>SOLUTION</span>
+                      <p class="tech-body mt-1">{project.devLog.solution}</p>
                     </div>
                   </div>
-                )}
-              </div>
-            )}
+                </div>
+              )}
+
+              <!-- Metadata bar -->
+              {(project.role || project.genre || project.devTime || project.status) && (
+                <div class="px-4 py-3 flex flex-wrap gap-x-6 gap-y-1"
+                  style="border-top: 1px solid var(--border); background: rgba(255,255,255,0.02)">
+                  {project.role && (
+                    <span class="mono text-xs text-[var(--text-secondary)]">
+                      ROLE: <span class="text-[var(--text-secondary)]">{project.role}</span>
+                    </span>
+                  )}
+                  {project.genre && (
+                    <span class="mono text-xs text-[var(--text-secondary)]">
+                      GENRE: <span class="text-[var(--text-secondary)]">{project.genre}</span>
+                    </span>
+                  )}
+                  {project.devTime && (
+                    <span class="mono text-xs text-[var(--text-secondary)]">
+                      DEV TIME: <span class="text-[var(--text-secondary)]">{project.devTime}</span>
+                    </span>
+                  )}
+                  {project.status && (
+                    <span class="mono text-xs text-[var(--text-secondary)]">
+                      STATUS: {project.status === "Out of Service"
+                        ? <span style="color: #666">✕ OUT OF SERVICE</span>
+                        : project.status === "Unreleased"
+                        ? <span style="color: #888">◌ UNRELEASED</span>
+                        : project.status === "Thesis"
+                        ? <span style="color: #888">◈ THESIS</span>
+                        : <span style={`color: ${siteConfig.accentColor}`}>✓ {project.status.toUpperCase()}</span>
+                      }
+                    </span>
+                  )}
+                </div>
+              )}
+
+              <!-- Skill tags -->
+              {((project.frontendStack && project.frontendStack.length > 0) ||
+                (project.backendStack && project.backendStack.length > 0)) && (
+                <div class="px-4 py-3 space-y-3"
+                  style="border-top: 1px solid var(--border)">
+                  {project.frontendStack && project.frontendStack.length > 0 && (
+                    <div>
+                      <h4 class="mono section-label">// Frontend Stack</h4>
+                      <div class="flex flex-wrap gap-2">
+                        {project.frontendStack.map((item) => (
+                          <span class="tag tag--frontend">
+                            {item.engine}{item.lang ? `-${item.lang}` : ''}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {project.backendStack && project.backendStack.length > 0 && (
+                    <div>
+                      <h4 class="mono section-label">// Backend Stack</h4>
+                      <div class="flex flex-wrap gap-2">
+                        {project.backendStack.map((item) => (
+                          <span class="tag tag--backend">
+                            {item.engine}{item.lang ? `-${item.lang}` : ''}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <!-- SHOW LESS (bottom of expandable) -->
+              <button
+                class="expand-toggle expand-toggle--less mono"
+                type="button"
+                data-expand-toggle
+                aria-expanded="true"
+                aria-label={`Collapse details for ${project.name}`}
+              >
+                SHOW LESS <span class="expand-chevron">▴</span>
+              </button>
+            </div>
+            <!-- /expandable -->
 
           </div>
           );
@@ -320,6 +343,15 @@ function hasAnyDistribution(p: Project) {
 )}
 
 <style>
+  .project-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
   .asset-card {
     overflow: hidden;
     transition: box-shadow 0.25s ease;
@@ -353,25 +385,15 @@ function hasAnyDistribution(p: Project) {
   }
 
   .expand-chevron {
-    transition: transform 0.25s ease;
     font-size: 0.9rem;
     line-height: 1;
   }
 
-  .expand-label-less { display: none; }
-  .expand-label-more { display: inline; }
+  /* Collapsed: expandable hidden, READ MORE visible */
+  .asset-card[data-expanded="false"] .expandable { display: none; }
 
-  /* Collapsed (default) state */
-  .asset-card[data-expanded="false"] .expandable {
-    display: none;
-  }
-
-  /* Expanded state */
-  .asset-card[data-expanded="true"] .expand-label-more { display: none; }
-  .asset-card[data-expanded="true"] .expand-label-less { display: inline; }
-  .asset-card[data-expanded="true"] .expand-chevron {
-    transform: rotate(180deg);
-  }
+  /* Expanded: READ MORE hidden */
+  .asset-card[data-expanded="true"] .expand-toggle--more { display: none; }
 
   /* ── Primary CTA (header) ────────────────────────────── */
   .cta-btn {
@@ -456,61 +478,6 @@ function hasAnyDistribution(p: Project) {
     font-weight: 600;
   }
 
-  /* ── Dev Log block ───────────────────────────────────── */
-  .devlog {
-    background: var(--bg-devlog);
-    padding: 16px;
-    position: relative;
-  }
-
-  .devlog::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 16px;
-    bottom: 16px;
-    width: 2px;
-    background: linear-gradient(
-      to bottom,
-      var(--accent-warning) 0%,
-      var(--accent-warning) 50%,
-      var(--cta, #00D4FF) 50%,
-      var(--cta, #00D4FF) 100%
-    );
-  }
-
-  .devlog-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    padding-left: 10px;
-  }
-
-  .devlog-tag {
-    font-size: 0.65rem;
-    letter-spacing: 0.16em;
-    padding: 2px 6px;
-    border: 1px solid var(--border-bright);
-    border-radius: 2px;
-    color: var(--text-secondary);
-  }
-
-  .devlog-title {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .devlog-row {
-    padding-left: 10px;
-    margin-bottom: 10px;
-  }
-
-  .devlog-row:last-child {
-    margin-bottom: 0;
-  }
-
   .devlog-label {
     display: inline-block;
     font-size: 0.65rem;
@@ -518,24 +485,9 @@ function hasAnyDistribution(p: Project) {
     margin-bottom: 4px;
   }
 
-  .devlog-row p {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
   /* ── Distribution row ────────────────────────────────── */
   .distribution {
-    padding: 16px;
-  }
-
-  .distribution-label {
-    display: block;
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-bottom: 10px;
+    padding: 12px 16px;
   }
 
   .distribution-buttons {
@@ -551,37 +503,37 @@ function hasAnyDistribution(p: Project) {
     font-size: 0.7rem;
     letter-spacing: 0.08em;
     min-height: 44px;
-    padding: 5px 11px;
+    padding: 5px 14px;
     border-radius: 3px;
-    border: 1px solid var(--border-bright);
-    color: var(--text-secondary);
-    background: rgba(255,255,255,0.02);
-    transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.15s;
+    border: 1px solid var(--accent);
+    color: #000;
+    background: var(--accent);
+    font-weight: 600;
+    box-shadow: 0 0 14px -4px color-mix(in srgb, var(--accent) 70%, transparent);
+    transition: transform 0.15s, box-shadow 0.15s;
   }
 
   .store-btn:hover {
-    color: var(--brand, var(--text-primary));
-    border-color: var(--brand, var(--text-primary));
-    background: color-mix(in srgb, var(--brand, #fff) 10%, transparent);
     transform: translateY(-1px);
+    box-shadow: 0 0 0 1px var(--accent), 0 0 24px -2px color-mix(in srgb, var(--accent) 75%, transparent);
   }
 
   .store-icon {
     font-size: 0.85rem;
-    color: var(--brand, var(--text-secondary));
   }
 
   .store-btn--locked {
     color: var(--accent-locked);
-    border-style: dashed;
+    background: transparent;
+    border: 1px dashed var(--border-bright);
+    box-shadow: none;
+    font-weight: 400;
     cursor: default;
   }
 
   .store-btn--locked:hover {
-    color: var(--accent-locked);
-    border-color: var(--border-bright);
-    background: rgba(255,255,255,0.02);
     transform: none;
+    box-shadow: none;
   }
 
   .asset-gallery {
@@ -768,7 +720,13 @@ function hasAnyDistribution(p: Project) {
     cursor: default;
   }
 
-  /* ── Backend stack tag variant ───────────────────────── */
+  /* ── Stack tag variants ──────────────────────────────── */
+  .tag--frontend {
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.45);
+    color: #FCD34D;
+  }
+
   .tag--backend {
     background: rgba(124, 58, 237, 0.12);
     border-color: rgba(124, 58, 237, 0.45);
@@ -909,7 +867,9 @@ function hasAnyDistribution(p: Project) {
       const card = btn.closest('.asset-card') as HTMLElement;
       const expanded = card.dataset.expanded === 'true';
       card.dataset.expanded = (!expanded).toString();
-      btn.setAttribute('aria-expanded', (!expanded).toString());
+      card.querySelectorAll<HTMLElement>('[data-expand-toggle]').forEach(b => {
+        b.setAttribute('aria-expanded', (!expanded).toString());
+      });
     });
   });
 
