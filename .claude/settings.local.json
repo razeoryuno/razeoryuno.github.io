@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(openspec --version)",
+      "Bash(openspec new *)",
+      "Bash(openspec status *)",
+      "Bash(openspec instructions *)",
+      "Bash(openspec validate *)",
+      "Bash(npm run *)",
+      "Bash(openspec list *)",
+      "Bash(openspec --help)",
+      "Bash(openspec archive *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}
