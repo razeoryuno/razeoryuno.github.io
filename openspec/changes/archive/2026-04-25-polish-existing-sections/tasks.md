@@ -63,4 +63,4 @@
 - [x] 8.1 `npm run build` — build succeeds with no new warnings beyond the known Windows libuv quirk noted in CLAUDE.md
 - [x] 8.2 `npm run preview` — click through every section at 375px, 768px, 1440px; compare to step 1.1 baselines
 - [x] 8.3 Verify `openspec validate polish-existing-sections --strict` passes (or the project-local equivalent) before archiving
-- [ ] 8.4 Open a PR or commit sequence that matches the rollout order in `design.md` §Migration Plan (tokens first, per-section migrations, a11y pass, content edits)
+- [x] 8.4 Open a PR or commit sequence that matches the rollout order in `design.md` §Migration Plan (tokens first, per-section migrations, a11y pass, content edits)
