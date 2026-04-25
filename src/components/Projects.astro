@@ -48,13 +48,11 @@ function hasAnyDistribution(p: Project) {
 
       <!-- Asset cards -->
       <div class="lg:col-span-10 space-y-4">
-        {siteConfig.projects.map((project, index) => {
+        {siteConfig.projects.map((project) => {
           const hasExpandable = !!(
             project.responsibilities ||
             (project.coreSystems && project.coreSystems.length > 0) ||
-            project.devLog ||
-            hasAnyDistribution(project) ||
-            project.sourceCode
+            project.devLog
           );
           return (
           <div class="asset-card card-panel group" data-expanded="false">
@@ -94,18 +92,13 @@ function hasAnyDistribution(p: Project) {
             )}
 
             {(() => {
-              const cta = pickPrimaryCta(project);
+              const cta = !hasAnyDistribution(project) ? pickPrimaryCta(project) : null;
               return (
                 <>
                   <!-- Card header bar -->
                   <div class="asset-header flex items-center justify-between px-4 py-2.5"
                     style="border-bottom: 1px solid var(--border)">
-                    <div class="flex items-center gap-3 min-w-0">
-                      <span class="mono text-xs text-[var(--text-muted)] shrink-0">
-                        {String(index + 1).padStart(2, '0')}.asset
-                      </span>
-                      <span class="text-sm font-semibold text-[var(--text-primary)] truncate">{project.name}</span>
-                    </div>
+                    <span class="text-sm font-semibold text-[var(--text-primary)] truncate">{project.name}</span>
                     {cta && (
                       <a
                         href={cta.url}
@@ -150,7 +143,7 @@ function hasAnyDistribution(p: Project) {
               <!-- Role & Responsibility -->
               {project.responsibilities && (
                 <div class="px-4 py-4" style="border-top: 1px solid var(--border)">
-                  <h4 class="mono tech-label">// Role &amp; Responsibility</h4>
+                  <h4 class="mono section-label">// Role &amp; Responsibility</h4>
                   <p class="tech-body">{project.responsibilities}</p>
                 </div>
               )}
@@ -158,7 +151,7 @@ function hasAnyDistribution(p: Project) {
               <!-- Core Systems Developed -->
               {project.coreSystems && project.coreSystems.length > 0 && (
                 <div class="px-4 py-4" style="border-top: 1px solid var(--border)">
-                  <h4 class="mono tech-label">// Core Systems Developed</h4>
+                  <h4 class="mono section-label">// Core Systems Developed</h4>
                   <ul class="tech-list">
                     {project.coreSystems.map((system) => (
                       <li>
@@ -191,17 +184,12 @@ function hasAnyDistribution(p: Project) {
               )}
 
             <!-- Metadata bar -->
-            {(project.role || project.engine || project.genre || project.devTime || project.status) && (
+            {(project.role || project.genre || project.devTime || project.status) && (
               <div class="px-4 py-3 flex flex-wrap gap-x-6 gap-y-1"
                 style="border-top: 1px solid var(--border); background: rgba(255,255,255,0.02)">
                 {project.role && (
                   <span class="mono text-xs text-[var(--text-secondary)]">
                     ROLE: <span class="text-[var(--text-secondary)]">{project.role}</span>
-                  </span>
-                )}
-                {project.engine && (
-                  <span class="mono text-xs text-[var(--text-secondary)]">
-                    ENGINE: <span class="text-[var(--text-secondary)]">{project.engine}</span>
                   </span>
                 )}
                 {project.genre && (
@@ -232,7 +220,7 @@ function hasAnyDistribution(p: Project) {
               <!-- Distribution row -->
               {(hasAnyDistribution(project) || project.sourceCode) && (
                 <div class="distribution" style="border-top: 1px solid var(--border)">
-                  <span class="mono distribution-label">// Distribution</span>
+                  <span class="mono section-label">// Distribution</span>
                   <div class="distribution-buttons">
                     {project.distribution?.webgl && (
                       <a href={project.distribution.webgl} target="_blank" rel="noopener noreferrer"
@@ -302,7 +290,7 @@ function hasAnyDistribution(p: Project) {
                 )}
                 {project.backendSkills && project.backendSkills.length > 0 && (
                   <div>
-                    <h4 class="mono tech-label">// Backend Stack</h4>
+                    <h4 class="mono section-label">// Backend Stack</h4>
                     <div class="flex flex-wrap gap-2">
                       {project.backendSkills.map((skill) => (
                         <span class="tag tag--backend">{skill}</span>
@@ -424,6 +412,17 @@ function hasAnyDistribution(p: Project) {
   }
 
   /* ── Technical depth sections ────────────────────────── */
+  .section-label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-left: 2px solid var(--accent);
+    padding-left: 8px;
+  }
+
   .tech-label {
     font-size: 0.7rem;
     letter-spacing: 0.14em;
@@ -460,7 +459,7 @@ function hasAnyDistribution(p: Project) {
   /* ── Dev Log block ───────────────────────────────────── */
   .devlog {
     background: var(--bg-devlog);
-    padding: 16px 18px;
+    padding: 16px;
     position: relative;
   }
 
@@ -527,7 +526,7 @@ function hasAnyDistribution(p: Project) {
 
   /* ── Distribution row ────────────────────────────────── */
   .distribution {
-    padding: 14px 16px;
+    padding: 16px;
   }
 
   .distribution-label {

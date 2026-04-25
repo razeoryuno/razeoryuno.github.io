@@ -16,9 +16,7 @@ export const siteConfig = {
       "Unity",
       "C#",
       ".NET",
-      "MagicOnion",
       "gRPC",
-      "Live Service",
     ],
     domain: [
       "Server-authoritative architecture",

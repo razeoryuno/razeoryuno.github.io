@@ -2,6 +2,12 @@
 
 Portfolio site for Ittiwat Tuntithavorn. Single-page CV / résumé deployed to GitHub Pages.
 
+## Working rules
+
+- **Always update this CLAUDE.md** when structure, stack, content shape, or conventions change — keep it current with the codebase.
+- **Memory is local to this repo.** Save all persistent memories to `.claude/memory/` inside this repo, not to the global user memory path.
+- **Never output existing code.** Only show what changed — diffs, new snippets, or a one-line summary. Do not repeat unchanged code back to the user.
+
 ## Stack
 
 | Layer | Technology |
@@ -55,16 +61,16 @@ The exported `siteConfig` object contains:
 
 | Key | Type | Purpose |
 |---|---|---|
-| `name` | string | Full name (page title) |
-| `title` | string | Job title shown in hero |
-| `description` | string | `<meta name="description">` |
-| `accentColor` | string | CSS hex — used for links, highlights, skill bars |
-| `social` | object | `email`, `linkedin`, `twitter`, `github` |
+| `name` | string | Site author name |
+| `title` | string | Tagline / job title shown in Hero |
+| `description` | string | Meta description |
+| `accentColor` | string | Hex accent color (injected inline, not a CSS var) |
+| `social` | `{email, linkedin, twitter, github}` | Social links (all strings) |
 | `aboutMe` | string | Paragraph shown in About section |
-| `skills` | `{name, level}[]` | Skill bars (level 0–100) |
+| `expertise` | `{technical: string[], domain: string[]}` | Two skill-tag groups |
 | `projects` | see below | Project cards |
 | `experience` | `{company, title, dateRange, bullets}[]` | Work history |
-| `education` | `{school, degree, dateRange, achievements}[]` | Education |
+| `education` | `{school, degree, dateRange}[]` | Education |
 
 ### Projects array shape
 
@@ -72,14 +78,30 @@ The exported `siteConfig` object contains:
 {
   name: string;
   description: string;
-  link?: string;       // external URL — shows "OPEN ↗" button
-  image?: string;      // path relative to public/ e.g. "/images/projects/foo.jpg"
-  skills: string[];    // tag badges
+  images?: string[];             // paths relative to public/
+  videos?: string[];             // YouTube embed URLs
+  imageLayout?: string;          // "landscape" | "portrait";
+  skills?: string[];             // frontend tag badges
+  backendSkills?: string[];      // backend tag badges
   role?: string;
   engine?: string;
   genre?: string;
-  devTime?: string;    // e.g. "~6 months"
-  status?: string;     // "Live" | "Out of Service" | "Unreleased" | "Thesis"
+  devTime?: string;
+  status?: string;               // "Live" | "Out of Service" | "Unreleased" | "Thesis"
+  responsibilities?: string;
+  coreSystems?: string[];
+  devLog?: { title?: string; challenge: string; solution: string };
+  videoDemo?: string;
+  sourceCode?: string;
+  link?: string;                 // legacy fallback CTA
+  distribution?: {
+    webgl?: string;
+    googlePlay?: string;
+    appStore?: string;
+    steam?: string;
+    itchio?: string;
+    epic?: string;
+  };
 }
 ```
 
@@ -111,9 +133,7 @@ Shared CSS classes: `.mono`, `.tag`, `.card-panel`, `.skill-track`, `.skill-fill
 
 ## Static assets
 
-Banner images live in `public/images/projects/`. File names must match the `image` field in `config.ts`. Astro serves `public/` as-is — no import or processing needed.
-
-Current images: `pakapow-m.png`, `world-of-runner.jpg`, `zabb-world.jpg`, `neokami.jpg`, `commandeer-armament.jpg`.
+Banner images live in `public/images/projects/`. File names must match entries in the `images` array in `config.ts`. Astro serves `public/` as-is — no import or processing needed.
 
 ## Deployment
 
