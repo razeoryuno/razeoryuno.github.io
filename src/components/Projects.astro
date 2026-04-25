@@ -134,6 +134,45 @@ function hasAnyDistribution(p: Project) {
               );
             })()}
 
+            <!-- Metadata bar (always visible) -->
+            {(project.role || project.genre || project.year || project.devTime || project.status) && (
+              <div class="px-4 py-3 flex flex-wrap gap-x-6 gap-y-1"
+                style="border-top: 1px solid var(--border); background: rgba(255,255,255,0.02)">
+                {project.role && (
+                  <span class="mono text-xs text-[var(--text-secondary)]">
+                    ROLE: <span class="text-[var(--text-secondary)]">{project.role}</span>
+                  </span>
+                )}
+                {project.genre && (
+                  <span class="mono text-xs text-[var(--text-secondary)]">
+                    GENRE: <span class="text-[var(--text-secondary)]">{project.genre}</span>
+                  </span>
+                )}
+                {project.year && (
+                  <span class="mono text-xs text-[var(--text-secondary)]">
+                    YEAR: <span class="text-[var(--text-secondary)]">{project.year}</span>
+                  </span>
+                )}
+                {project.devTime && (
+                  <span class="mono text-xs text-[var(--text-secondary)]">
+                    DEV TIME: <span class="text-[var(--text-secondary)]">{project.devTime}</span>
+                  </span>
+                )}
+                {project.status && (
+                  <span class="mono text-xs text-[var(--text-secondary)]">
+                    STATUS: {project.status === "Out of Service"
+                      ? <span style="color: #666">✕ OUT OF SERVICE</span>
+                      : project.status === "Unreleased"
+                      ? <span style="color: #888">◌ UNRELEASED</span>
+                      : project.status === "Thesis"
+                      ? <span style="color: #888">◈ THESIS</span>
+                      : <span style={`color: ${siteConfig.accentColor}`}>✓ {project.status.toUpperCase()}</span>
+                    }
+                  </span>
+                )}
+              </div>
+            )}
+
             <!-- Distribution (always visible) -->
             {(hasAnyDistribution(project) || project.sourceCode) && (
               <div class="distribution" style="border-top: 1px solid var(--border)">
@@ -203,10 +242,10 @@ function hasAnyDistribution(p: Project) {
 
             <!-- Expandable block -->
             <div class="expandable">
-              <!-- Role & Responsibility -->
+              <!-- Responsibility -->
               {project.responsibilities && (
                 <div class="px-4 py-4" style="border-top: 1px solid var(--border)">
-                  <h4 class="mono section-label">// Role &amp; Responsibility</h4>
+                  <h4 class="mono section-label">// Responsibility</h4>
                   <p class="tech-body">{project.responsibilities}</p>
                 </div>
               )}
@@ -242,40 +281,6 @@ function hasAnyDistribution(p: Project) {
                       <p class="tech-body mt-1">{project.devLog.solution}</p>
                     </div>
                   </div>
-                </div>
-              )}
-
-              <!-- Metadata bar -->
-              {(project.role || project.genre || project.devTime || project.status) && (
-                <div class="px-4 py-3 flex flex-wrap gap-x-6 gap-y-1"
-                  style="border-top: 1px solid var(--border); background: rgba(255,255,255,0.02)">
-                  {project.role && (
-                    <span class="mono text-xs text-[var(--text-secondary)]">
-                      ROLE: <span class="text-[var(--text-secondary)]">{project.role}</span>
-                    </span>
-                  )}
-                  {project.genre && (
-                    <span class="mono text-xs text-[var(--text-secondary)]">
-                      GENRE: <span class="text-[var(--text-secondary)]">{project.genre}</span>
-                    </span>
-                  )}
-                  {project.devTime && (
-                    <span class="mono text-xs text-[var(--text-secondary)]">
-                      DEV TIME: <span class="text-[var(--text-secondary)]">{project.devTime}</span>
-                    </span>
-                  )}
-                  {project.status && (
-                    <span class="mono text-xs text-[var(--text-secondary)]">
-                      STATUS: {project.status === "Out of Service"
-                        ? <span style="color: #666">✕ OUT OF SERVICE</span>
-                        : project.status === "Unreleased"
-                        ? <span style="color: #888">◌ UNRELEASED</span>
-                        : project.status === "Thesis"
-                        ? <span style="color: #888">◈ THESIS</span>
-                        : <span style={`color: ${siteConfig.accentColor}`}>✓ {project.status.toUpperCase()}</span>
-                      }
-                    </span>
-                  )}
                 </div>
               )}
 

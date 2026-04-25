@@ -26,6 +26,45 @@ export const siteConfig = {
     ],
   } as { technical: string[]; domain: string[] },
   projects: [
+    // ─── DUMMY — remove before deploy ─────────────────────────────────────
+    {
+      name: "DEMO — All Fields Enabled",
+      description: "Dummy card exercising every rendered slot: gallery, icon, all distribution buttons, locked source, responsibilities, core systems, dev log, metadata bar, and both stack tag variants.",
+      icon: "/images/projects/icon/pakapow_m_icon.jpg",
+      images: ["/images/projects/pakapow-m.png", "/images/projects/world-of-runner.jpg"],
+      videos: ["https://www.youtube.com/watch?v=OkD7sQVFtrk"],
+      imageLayout: "landscape",
+      frontendStack: [{ engine: "Unity", lang: "C#" }, { engine: "Live2D", lang: "" }],
+      backendStack: [{ engine: "MagicOnion", lang: "C#" }, { engine: "Go", lang: "" }],
+      relateTool: ["Live2D", "Spine2D"],
+      role: "Full Stack Developer",
+      engine: "Unity",
+      genre: "Demo / Review",
+      year: "2000",
+      devTime: "~0 months",
+      status: "Live",
+      responsibilities: "Dummy responsibilities paragraph. Exercises the Role & Responsibility block inside the expandable panel.",
+      coreSystems: [
+        "Dummy Core System A",
+        "Dummy Core System B",
+        "Dummy Core System C",
+      ],
+      devLog: {
+        title: "Dummy Dev Log Entry",
+        challenge: "CHALLENGE text — rendered in the warning accent color (--accent-warning).",
+        solution: "SOLUTION text — rendered in the main accent color (--accent).",
+      },
+      distribution: {
+        webgl: "https://example.com",
+        googlePlay: "https://example.com",
+        appStore: "https://example.com",
+        steam: "https://example.com",
+        itchio: "https://example.com",
+        epic: "https://example.com",
+      },
+      sourceCode: "proprietary",
+    },
+    // ──────────────────────────────────────────────────────────────────────
     // {
     //   name: "CardPotion",
     //   description: "A card game built with Unity. Click to play it in the browser via Unity WebGL.",
@@ -227,10 +266,19 @@ export const siteConfig = {
       genre: "Casual / Idle",
       devTime: "~2 months",
       status: "Out of Service",
+      responsibilities: "Develop gameplay and ads monetize system.",
+      coreSystems: [
+        "queue action point and click",
+        "mobile ads sdk",
+      ], devLog: {
+        title: "",
+        challenge: "",
+        solution: ""
+      }
     },
     {
       name: "Cripple Bat",
-      description: "Mobile endless flap-style platformer where players guide a bat through procedurally placed obstacle columns.",
+      description: "Mobile endless flappy bird-style platformer where players guide a bat through procedurally placed obstacle columns.",
       icon: "/images/projects/icon/crippled_bat_icon.png",
       images: [
         "/images/projects/crippled_bat_1.jpg",
@@ -243,13 +291,25 @@ export const siteConfig = {
       genre: "Endless Runner",
       devTime: "~1 month",
       status: "Out of Service",
+      responsibilities: "Managed full-cycle development from initial concept to store deployment. Engineered gameplay mechanics, social integration, and monetization systems.",
+      coreSystems: [
+        "Procedural Level Generation",
+        "Social Leaderboard Integration",
+        "In-game Currency & Economy Shop",
+        "Physics-based Character Controller"
+      ],
+      devLog: {
+        title: "Rapid Prototyping & Social Growth",
+        challenge: "Developing and shipping a polished, feature-complete mobile title within a tight 30-day window while ensuring high player retention through social competition.",
+        solution: "Leveraged a modular 'Object Pooling' system for procedural obstacles to maintain 60FPS on legacy mobile devices. Integrated Facebook SDK to create a frictionless competitive environment with real-time friend leaderboards."
+      }
     },
     {
       name: "Bullet Blossom",
       description: "Thesis project — side-scrolling bullet hell built with XNA. Features a weapon-wheel system with multiple elemental projectile sets across multiple stages.",
       imageLayout: "landscape",
       frontendStack: [{ engine: "XNA", lang: "C#" }],
-      role: "Solo Programmer",
+      role: "Solo Dev",
       engine: "XNA",
       genre: "Bullet Hell",
       devTime: "~6 months",
@@ -268,6 +328,7 @@ export const siteConfig = {
     role?: string;
     engine?: string;
     genre?: string;
+    year?: string;
     devTime?: string;
     status?: string;
     /* --- Inspector fields (progressive) --- */
@@ -295,7 +356,7 @@ export const siteConfig = {
       title: "Game Developer Programmer",
       dateRange: "2019 - Present",
       bullets: [
-        "Shipped 14+ games and apps across iOS, Android, WebGL, and Telegram Mini Apps",
+        "Shipped multiple games across iOS, Android, WebGL, and Telegram Mini Apps",
         "Implemented real-time multiplayer game clients using MagicOnion and gRPC for low-latency synchronization",
         "Developed shared C# live-service libraries reused across all projects to standardize auth, IAP, and data pipelines",
         "Designed a Google Sheets–driven master data pipeline enabling designers to manage game balance without code changes",
