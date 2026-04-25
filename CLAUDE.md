@@ -7,7 +7,7 @@ Portfolio site for Ittiwat Tuntithavorn. Single-page CV / résumé deployed to G
 - **Always update this CLAUDE.md** when structure, stack, content shape, or conventions change — keep it current with the codebase.
 - **Memory is local to this repo.** Save all persistent memories to `.claude/memory/` inside this repo, not to the global user memory path.
 - **Never output existing code.** Only show what changed — diffs, new snippets, or a one-line summary. Do not repeat unchanged code back to the user.
-- **All content is in `src/config.ts` — never hardcode text in `.astro` files.**
+- **All content lives in `src/data/` — never hardcode text in `.astro` files.** `src/config.ts` is a thin aggregator only.
 
 ## Stack
 
@@ -23,7 +23,28 @@ Portfolio site for Ittiwat Tuntithavorn. Single-page CV / résumé deployed to G
 
 ```
 src/
-  config.ts              ← ALL site content (single source of truth)
+  config.ts              ← thin aggregator; re-exports siteConfig (do not add content here)
+  data/
+    meta.ts              ← name, title, description, accentColor, social, aboutMe, expertise
+    experience.ts        ← work history entries
+    education.ts         ← education entries
+    projects/
+      index.ts           ← assembles projects array + re-exports Project type
+      types.ts           ← Project type definition
+      _demo.ts           ← DEMO card (remove before deploy)
+      pakapow-m.ts       ← ★ Done
+      cripple-bat.ts     ← ★ Done
+      world-of-runner.ts
+      neokami.ts
+      zabb-world.ts
+      commandeer-armament.ts
+      ever-after-rebellion.ts
+      puzzle-guardian.ts
+      godji-runner.ts
+      mad-mission.ts
+      blackjack-dash.ts
+      omg-reindeer.ts
+      bullet-blossom.ts
   pages/
     index.astro          ← HTML shell, imports all section components
   components/
@@ -115,4 +136,24 @@ All images are served from `public/` as-is (no processing).
 - **`public/.nojekyll`** — must exist; prevents GitHub Pages from running Jekyll on `.astro` files.
 - **Repo Settings → Pages → Source** must be `GitHub Actions`, not `Deploy from a branch`.
 - Workflow: `.github/workflows/deploy.yml` builds `dist/` and deploys via `actions/deploy-pages@v4`.
+
+## Project completion status
+
+A project is **Done** when `responsibilities`, `coreSystems`, and `devLog` are all filled with real content. Edit the matching file in `src/data/projects/`.
+
+| Project | File | responsibilities | coreSystems | devLog | Status |
+|---|---|---|---|---|---|
+| Pakapow M | `pakapow-m.ts` | ✓ | ✓ | ✓ | **Done** |
+| Cripple Bat | `cripple-bat.ts` | ✓ | ✓ | ✓ | **Done** |
+| World of Runner | `world-of-runner.ts` | ✗ | ✗ | ✗ | TODO |
+| Neokami God Challenger | `neokami.ts` | ✗ | ✗ | ✗ | TODO |
+| Zabb World Secret Stories | `zabb-world.ts` | ✗ | ✗ | ✗ | TODO |
+| Commandeer Armament | `commandeer-armament.ts` | ✗ | ✗ | ✗ | TODO |
+| Ever After Rebellion | `ever-after-rebellion.ts` | ✗ | ✗ | ✗ | TODO |
+| Puzzle Guardian | `puzzle-guardian.ts` | ✗ | ✗ | ✗ | TODO |
+| Godji Runner | `godji-runner.ts` | ✗ | ✗ | ✗ | TODO |
+| MAD MISSION | `mad-mission.ts` | ✗ | ✗ | ✗ | TODO |
+| Blackjack Dash | `blackjack-dash.ts` | ✗ | ✗ | ✗ | TODO |
+| OMG REINDEER OMG | `omg-reindeer.ts` | ✓ | ✓ | ✗ | TODO |
+| Bullet Blossom | `bullet-blossom.ts` | ✗ | ✗ | ✗ | TODO |
 
