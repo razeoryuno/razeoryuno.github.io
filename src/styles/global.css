@@ -5,11 +5,27 @@
   --bg-panel:       #181818;
   --bg-card:        #1e1e1e;
   --bg-card-hover:  #242424;
+  --bg-devlog:      #171a1e;
   --border:         #2d2d2d;
   --border-bright:  #3a3a3a;
   --text-primary:   #e2e2e2;
   --text-secondary: #888888;
   --text-muted:     #484848;
+
+  /* Accent and focus ring */
+  --accent:         #00D4FF;
+  --focus-ring:     2px solid var(--accent);
+
+  /* Inspector — challenge / warning accent for Dev Log */
+  --accent-warning: #FF9500;
+  --accent-locked:  #666;
+
+  /* Distribution brand colors */
+  --store-google:   #01875F;
+  --store-apple:    #0A84FF;
+  --store-steam:    #66C0F4;
+  --store-itchio:   #FA5C5C;
+  --store-epic:     #ffffff;
 }
 
 html {
@@ -29,23 +45,18 @@ section {
   border-bottom: 1px solid var(--border);
 }
 
+/* Global focus ring for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
 /* Monospace utility */
 .mono {
   font-family: 'JetBrains Mono', 'Consolas', monospace;
-}
-
-/* Skill progress bar */
-.skill-track {
-  height: 3px;
-  background: var(--border-bright);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.skill-fill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Card glow on hover */
@@ -59,6 +70,25 @@ section {
 .card-panel:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-bright);
+}
+
+/* Shared section padding — reproduces p-8 sm:p-12 md:p-16 lg:p-24 */
+.section-pad {
+  padding: 2rem;
+}
+@media (min-width: 640px) {
+  .section-pad { padding: 3rem; }
+}
+@media (min-width: 768px) {
+  .section-pad { padding: 4rem; }
+}
+@media (min-width: 1024px) {
+  .section-pad { padding: 6rem; }
+}
+
+/* Shared section accent rule — replaces inline style={`background: ${accentColor}`} */
+.accent-rule {
+  background: var(--accent);
 }
 
 /* Tag/badge */
@@ -88,3 +118,16 @@ section {
 .delay-200 { animation-delay: 0.2s; }
 .delay-400 { animation-delay: 0.4s; }
 .delay-600 { animation-delay: 0.6s; }
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .skill-fill {
+    transition-duration: 0.01s;
+  }
+}

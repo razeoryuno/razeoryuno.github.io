@@ -4,18 +4,18 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
 ---
 
 {hasExperience && (
-  <section id="experience" class="p-8 sm:p-12 md:p-16 lg:p-24" style="background: var(--bg-panel)">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+  <section id="experience" class="section-pad" aria-labelledby="experience-heading" style="background: var(--bg-panel)">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
 
       <!-- Section header -->
-      <div class="lg:col-span-4">
+      <div class="lg:col-span-2">
         <p class="mono text-xs tracking-[0.2em] text-[var(--text-muted)] uppercase mb-2">SECTION_03</p>
-        <h2 class="text-4xl sm:text-5xl xl:text-6xl font-bold text-[var(--text-primary)]">Experience</h2>
-        <div class="w-16 h-0.5 mt-3" style={`background: ${siteConfig.accentColor}`}></div>
+        <h2 id="experience-heading" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-[var(--text-primary)]">Experience</h2>
+        <div class="w-12 h-0.5 mt-3 accent-rule"></div>
       </div>
 
       <!-- Timeline -->
-      <div class="lg:col-span-8">
+      <div class="lg:col-span-10">
         <div class="relative pl-5" style="border-left: 1px solid var(--border)">
           {siteConfig.experience.map((exp, index) => (
             <div class={`relative pb-10 last:pb-0`}>
@@ -33,7 +33,7 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
                     <h3 class="font-semibold text-[var(--text-primary)]">{exp.title}</h3>
                     <p class="text-sm" style={`color: ${siteConfig.accentColor}`}>{exp.company}</p>
                   </div>
-                  <span class="mono text-xs text-[var(--text-muted)] shrink-0">{exp.dateRange}</span>
+                  <span class="mono text-xs text-[var(--text-secondary)] shrink-0">{exp.dateRange}</span>
                 </div>
 
                 <!-- Bullets -->

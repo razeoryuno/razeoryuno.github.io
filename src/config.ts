@@ -11,40 +11,63 @@ export const siteConfig = {
   },
   aboutMe:
     "Senior Game Developer with 10+ years of experience shipping games across mobile, PC, WebGL, and Telegram Mini Apps. Specializing in Unity and C#, with deep expertise in game systems, real-time multiplayer, monetization, and full store deployment pipelines. Comfortable across the entire production lifecycle from architecture to store submission.",
-  skills: [
-    { name: "Unity Engine",        level: 95 },
-    { name: "C# / .NET",           level: 90 },
-    { name: "Agile / Scrum",       level: 85 },
-    { name: "Git",                 level: 85 },
-    { name: "Real-time Multiplayer (MagicOnion / gRPC)", level: 80 },
-    { name: "PlayFab",             level: 75 },
-    { name: "Live Service Library (in-house)", level: 85 },
-    { name: "Spine2D / Live2D",    level: 70 },
-    { name: "Godot",               level: 65 },
-  ] as Array<{ name: string; level: number }>,
+  expertise: {
+    technical: [
+      "Unity",
+      "C#",
+      ".NET",
+      "MagicOnion",
+      "gRPC",
+      "Live Service",
+    ],
+    domain: [
+      "Server-authoritative architecture",
+      "Turn-based combat systems",
+      "Real-time state synchronization",
+      "Mobile store deployment",
+    ],
+  } as { technical: string[]; domain: string[] },
   projects: [
-    {
-      name: "CardPotion",
-      description: "A card game built with Unity. Click to play it in the browser via Unity WebGL.",
-      link: "https://razeoryuno.github.io/git-hub-page-test",
-      skills: ["Unity", "C#", "WebGL"],
-      role: "Solo Dev",
-      engine: "Unity",
-      genre: "Card Game",
-      devTime: "~2 months",
-      status: "Live",
-    },
+    // {
+    //   name: "CardPotion",
+    //   description: "A card game built with Unity. Click to play it in the browser via Unity WebGL.",
+    //   link: "https://razeoryuno.github.io/git-hub-page-test",
+    //   skills: ["Unity", "C#", "WebGL"],
+    //   role: "Solo Dev",
+    //   engine: "Unity",
+    //   genre: "Card Game",
+    //   devTime: "~2 months",
+    //   status: "Live",
+    // },
     {
       name: "Pakapow M",
-      description: "Online board RPG inspired by the friendship-ending chaos of Dokapon. Navigate a tile-based map with turn-based combat, monster encounters, treasure events, and multiplayer rivalry.",
+      description: "Online board RPG inspired by Dokapon. Navigate a tile-based map with turn-based combat, monster encounters, treasure events.",
       images: ["/images/projects/pakapow-m.png"],
       imageLayout: "landscape",
       skills: ["Unity", "C#"],
-      role: "Developer",
+      backendSkills: ["MagicOnion", "Live Service"],
+      role: "Lead Developer",
       engine: "Unity",
       genre: "Board RPG",
-      devTime: "~18 months",
+      devTime: "~12 months",
       status: "Live",
+      responsibilities: "Spearheaded technical direction and team leadership. Designed the core game architecture and engineered the high-performance turn-based combat system.",
+      coreSystems: [
+        "Full Server-Authoritative Architecture",
+        "Turn-Based Combat Engine",
+        "Dynamic Monster Encounter & Map Logic",
+        "Event-Driven Quest & World Progression",
+        "Real-time Distributed Save System"
+      ],
+      devLog: {
+        title: "Zero-Loss State Synchronization",
+        challenge: "Ensuring 100% data integrity for every player action. The system required zero progress loss during unexpected disconnects while maintaining synchronized state across a distributed server-client environment.",
+        solution: "Architected a full server-authoritative pipeline using gRPC for low-latency, strongly-typed communication. Implemented a transaction-based persistence layer that validates every action server-side before updating the client, ensuring a consistent 'Source of Truth'.",
+      },
+      distribution: {
+        googlePlay: "https://play.google.com/store/apps/details?id=com.varisoft.pakapowmobile&pcampaignid=web_share",
+        appStore: "https://apps.apple.com/th/app/pakapow-m/id6745856227?l=th",
+      }
     },
     {
       name: "World of Runner",
@@ -56,11 +79,11 @@ export const siteConfig = {
       engine: "Unity",
       genre: "Racing",
       devTime: "~12 months",
-      status: "Live",
+      status: "Out of Service",
     },
     {
       name: "Neokami God Challenger",
-      description: "Action RPG with isometric world exploration, real-time combat, and character progression. Led the full development cycle as Lead Developer.",
+      description: "Action RPG with isometric world exploration, real-time combat, and character progression.",
       images: ["/images/projects/neokami.jpg"],
       videos: ["https://www.youtube.com/watch?v=OkD7sQVFtrk"],
       imageLayout: "landscape",
@@ -90,7 +113,7 @@ export const siteConfig = {
     },
     {
       name: "Commandeer Armament",
-      description: "Tactical Collectible Card Game where units occupy board positions and attack in directional patterns. Handled both client and server implementation.",
+      description: "Tactical Collectible Card Game where units occupy board positions and attack in directional patterns.",
       images: [
         "/images/projects/commandeer_0.jpg",
         "/images/projects/commandeer_2.jpg",
@@ -126,6 +149,7 @@ export const siteConfig = {
         "/images/projects/puzzle_guardian_1.jpg",
         "/images/projects/puzzle_guardian_2.jpg",
       ],
+      videos: ["https://www.youtube.com/watch?v=mD0TRdb4AM0"],
       imageLayout: "portrait",
       skills: ["Unity", "C#"],
       role: "Back-end Developer",
@@ -136,11 +160,12 @@ export const siteConfig = {
     },
     {
       name: "Godji Runner",
-      description: "3D mobile endless runner based on the Godji IP. Built client-side gameplay systems and UI flows.",
+      description: "3D mobile endless runner based on the Godji IP.",
       images: [
         "/images/projects/godji_1.jpg",
         "/images/projects/godji_2.jpg",
       ],
+      videos: ["https://www.youtube.com/watch?v=Oo5oDDVpF10"],
       imageLayout: "portrait",
       skills: ["Unity", "C#"],
       role: "Front-end Developer",
@@ -151,7 +176,7 @@ export const siteConfig = {
     },
     {
       name: "MAD MISSION",
-      description: "Mobile base-building strategy game. Implemented game client systems, battle UI, and economy flow.",
+      description: "Mobile base-building strategy game.",
       images: [
         "/images/projects/mad_mission_1.jpg",
         "/images/projects/mad_mission_2.jpg",
@@ -230,11 +255,30 @@ export const siteConfig = {
     videos?: string[];
     imageLayout?: "portrait" | "landscape";
     skills: string[];
+    backendSkills?: string[];
     role?: string;
     engine?: string;
     genre?: string;
     devTime?: string;
     status?: string;
+    /* --- Inspector fields (progressive) --- */
+    responsibilities?: string;
+    coreSystems?: string[];
+    devLog?: {
+      title?: string;
+      challenge: string;
+      solution: string;
+    };
+    distribution?: {
+      webgl?: string;
+      googlePlay?: string;
+      appStore?: string;
+      steam?: string;
+      itchio?: string;
+      epic?: string;
+    };
+    videoDemo?: string;
+    sourceCode?: string | "proprietary";
   }>,
   experience: [
     {
@@ -255,8 +299,8 @@ export const siteConfig = {
       title: "Game Developer Programmer",
       dateRange: "2017 - 2019",
       bullets: [
-        "Developed gameplay systems and UI for multiple Unity game projects",
-        "Contributed to Agile development workflows using Git and Scrum",
+        "Shipped gameplay systems and client-side UI across multiple Unity titles",
+        "Operated within Agile sprint cycles using Git version control and Scrum workflows",
       ],
     },
     {
@@ -274,7 +318,7 @@ export const siteConfig = {
       dateRange: "2013 - 2015",
       bullets: [
         "Built game features and tooling in Unity as part of a small development team",
-        "Gained foundational experience in C#, game production pipelines, and Agile workflows",
+        "Established foundational practice in C#, Unity production pipelines, and team-based Agile workflows",
       ],
     },
     {
@@ -282,7 +326,7 @@ export const siteConfig = {
       title: "SAP Consultant Trainee",
       dateRange: "2013",
       bullets: [
-        "Trained in SAP enterprise consulting before transitioning fully into game development",
+        "Completed SAP enterprise consulting training before pivoting fully to game development",
       ],
     },
   ],
@@ -291,13 +335,11 @@ export const siteConfig = {
       school: "Rangsit University",
       degree: "Bachelor of Technology in Computer Game Multimedia (B.Tech. CGM)",
       dateRange: "2009 - 2013",
-      achievements: [],
     },
     {
       school: "Sarasas Witade Bangbon School",
       degree: "Bilingual Program",
       dateRange: "2004 - 2009",
-      achievements: [],
     },
   ],
 };
