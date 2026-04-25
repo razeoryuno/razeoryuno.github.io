@@ -88,8 +88,8 @@ Each `.asset-card` renders in this order — always visible unless noted:
 | Slot | Always visible | Notes |
 |---|---|---|
 | Gallery | ✓ | `images[]` + `videos[]`; scroll-snap strip |
-| Icon + Name + Description | ✓ | Icon 48×48 rounded-square left of name/desc; header CTA shown only when no `distribution` |
-| Distribution buttons | ✓ | Primary CTA style (accent fill); `store-btn--locked` for proprietary |
+| Icon + Name + Description | ✓ | Icon 72×72 rounded-square left of name/desc; header CTA shown only when no `distribution` |
+| Distribution buttons | ✓ | Per-store brand color via `.store-btn--{google\|apple\|steam\|itchio\|epic}`; WebGL/Source Code use `--accent`; `store-btn--locked` for proprietary |
 | READ MORE toggle | ✓ (collapsed) | Hidden once expanded (`expand-toggle--more`) |
 | **— expandable —** | fold | Hidden until expanded |
 | → Responsibilities | fold | `responsibilities` field |
@@ -108,5 +108,5 @@ All images are served from `public/` as-is (no processing).
 | Path | Field in `config.ts` | Notes |
 |---|---|---|
 | `public/images/projects/` | `images[]` | Banner/screenshot gallery |
-| `public/images/projects/icon/` | `icon` | 48×48 card icon — optional |
+| `public/images/projects/icon/` | `icon` | 72×72 card icon — optional |
 

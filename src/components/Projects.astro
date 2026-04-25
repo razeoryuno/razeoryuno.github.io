@@ -103,8 +103,8 @@ function hasAnyDistribution(p: Project) {
                         src={project.icon}
                         alt=""
                         aria-hidden="true"
-                        width="48"
-                        height="48"
+                        width="72"
+                        height="72"
                         class="project-icon"
                         loading="lazy"
                       />
@@ -146,31 +146,31 @@ function hasAnyDistribution(p: Project) {
                   )}
                   {project.distribution?.googlePlay && (
                     <a href={project.distribution.googlePlay} target="_blank" rel="noopener noreferrer"
-                      class="store-btn mono" aria-label={`${project.name} on Google Play`}>
+                      class="store-btn store-btn--google mono" aria-label={`${project.name} on Google Play`}>
                       <span class="store-icon">▶</span> Google Play
                     </a>
                   )}
                   {project.distribution?.appStore && (
                     <a href={project.distribution.appStore} target="_blank" rel="noopener noreferrer"
-                      class="store-btn mono" aria-label={`${project.name} on App Store`}>
+                      class="store-btn store-btn--apple mono" aria-label={`${project.name} on App Store`}>
                       <span class="store-icon"></span> App Store
                     </a>
                   )}
                   {project.distribution?.steam && (
                     <a href={project.distribution.steam} target="_blank" rel="noopener noreferrer"
-                      class="store-btn mono" aria-label={`${project.name} on Steam`}>
+                      class="store-btn store-btn--steam mono" aria-label={`${project.name} on Steam`}>
                       <span class="store-icon">⚙</span> Steam
                     </a>
                   )}
                   {project.distribution?.itchio && (
                     <a href={project.distribution.itchio} target="_blank" rel="noopener noreferrer"
-                      class="store-btn mono" aria-label={`${project.name} on itch.io`}>
+                      class="store-btn store-btn--itchio mono" aria-label={`${project.name} on itch.io`}>
                       <span class="store-icon">◆</span> itch.io
                     </a>
                   )}
                   {project.distribution?.epic && (
                     <a href={project.distribution.epic} target="_blank" rel="noopener noreferrer"
-                      class="store-btn mono" aria-label={`${project.name} on Epic Games`}>
+                      class="store-btn store-btn--epic mono" aria-label={`${project.name} on Epic Games`}>
                       <span class="store-icon">◈</span> Epic Games
                     </a>
                   )}
@@ -344,9 +344,9 @@ function hasAnyDistribution(p: Project) {
 
 <style>
   .project-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
     object-fit: cover;
     border: 1px solid var(--border);
     flex-shrink: 0;
@@ -505,18 +505,24 @@ function hasAnyDistribution(p: Project) {
     min-height: 44px;
     padding: 5px 14px;
     border-radius: 3px;
-    border: 1px solid var(--accent);
-    color: #000;
-    background: var(--accent);
+    border: 1px solid var(--store-color, var(--accent));
+    color: var(--store-text, #000);
+    background: var(--store-color, var(--accent));
     font-weight: 600;
-    box-shadow: 0 0 14px -4px color-mix(in srgb, var(--accent) 70%, transparent);
+    box-shadow: 0 0 14px -4px color-mix(in srgb, var(--store-color, var(--accent)) 70%, transparent);
     transition: transform 0.15s, box-shadow 0.15s;
   }
 
   .store-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 0 0 1px var(--accent), 0 0 24px -2px color-mix(in srgb, var(--accent) 75%, transparent);
+    box-shadow: 0 0 0 1px var(--store-color, var(--accent)), 0 0 24px -2px color-mix(in srgb, var(--store-color, var(--accent)) 75%, transparent);
   }
+
+  .store-btn--google { --store-color: var(--store-google); --store-text: #fff; }
+  .store-btn--apple  { --store-color: var(--store-apple);  --store-text: #fff; }
+  .store-btn--steam  { --store-color: var(--store-steam);  --store-text: #1b2838; }
+  .store-btn--itchio { --store-color: var(--store-itchio); --store-text: #fff; }
+  .store-btn--epic   { --store-color: var(--store-epic);   --store-text: #000; }
 
   .store-icon {
     font-size: 0.85rem;
