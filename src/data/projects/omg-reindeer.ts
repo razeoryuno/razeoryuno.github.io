@@ -20,10 +20,5 @@ export const omgReindeer: Project = {
   coreSystems: [
     "queue action point and click",
     "mobile ads sdk",
-  ],
-  devLog: {
-    title: "",
-    challenge: "",
-    solution: "",
-  },
+  ]
 };

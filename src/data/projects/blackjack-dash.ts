@@ -17,10 +17,11 @@ export const blackjackDash: Project = {
   genre: "Card Game",
   devTime: "~3 months",
   status: "Out of Service",
-  responsibilities: "",
-  coreSystems: [],
-  devLog: {
-    challenge: "",
-    solution: "",
-  },
+  responsibilities: "Develop gameplay and enchant overall game visual with tweening and particle effect.",
+  coreSystems: [
+    "Solitaire card controller",
+    "Poker hand ranking",
+    "Tweening",
+    "Particle System"
+  ],
 };

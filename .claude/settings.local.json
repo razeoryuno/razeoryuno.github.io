@@ -11,7 +11,9 @@
       "Bash(openspec --help)",
       "Bash(openspec archive *)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(git -C \"E:/Repository/razeo/razeoryuno.github.io\" add CLAUDE.md src/config.ts src/data/)",
+      "Bash(git -C E:/Repository/razeo/razeoryuno.github.io commit -m ' *)"
     ]
   }
 }
